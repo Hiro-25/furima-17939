@@ -1,0 +1,2 @@
+class Furima < ApplicationRecord
+end
