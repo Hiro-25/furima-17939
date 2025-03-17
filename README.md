@@ -1,24 +1,58 @@
 # README
+テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
+| Column          | Type    | Options |
+|----------------|--------|---------|
+| id            | integer | PK, 自動生成 |
+| nickname      | string  | null: false |
+| email         | string  | null: false, unique: true |
+| encrypted_password | string | null: false |
 
-Things you may want to cover:
+## 🔗 Association
+- has_many :items
+- has_many :purchases
 
-* Ruby version
+---
 
-* System dependencies
+## items テーブル
+| Column        | Type       | Options |
+|--------------|-----------|---------|
+| id           | integer   | PK, 自動生成 |
+| name         | string    | null: false |
+| description  | text      | null: false |
+| price        | integer   | null: false |
+| user_id      | references | null: false, foreign_key: true |
 
-* Configuration
+#### 🔗 Association
+- belongs_to :user
+- has_one :purchase
 
-* Database creation
+---
 
-* Database initialization
+## purchases テーブル
+| Column  | Type       | Options |
+|--------|-----------|---------|
+| id     | integer   | PK, 自動生成 |
+| user_id | references | null: false, foreign_key: true |
+| item_id | references | null: false, foreign_key: true |
 
-* How to run the test suite
+#### 🔗 Association
+- belongs_to :user
+- belongs_to :item
+- has_one :address
 
-* Services (job queues, cache servers, search engines, etc.)
+---
 
-* Deployment instructions
+## addresses テーブル
+| Column        | Type    | Options |
+|--------------|--------|---------|
+| id           | integer | PK, 自動生成 |
+| post_code    | string  | null: false |
+| prefecture   | string  | null: false |
+| city         | string  | null: false |
+| street_address | string  | null: false |
+| purchase_id  | references | null: false, foreign_key: true |
 
-* ...
+#### 🔗 Association
+- belongs_to :purchase
