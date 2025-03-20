@@ -82,3 +82,6 @@ gem 'pry-rails'
 
 gem 'devise'
 gem "active_hash", "~> 3.3"
+
+gem 'mini_magick'
+gem 'image_processing', '~> 1.2'
