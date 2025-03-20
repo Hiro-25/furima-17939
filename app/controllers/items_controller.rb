@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  # before_action :authenticate_user!, except: [:index, :show]
   # before_action :move_to_index, only: [:edit, :update, :destroy]
 
   def index
@@ -12,10 +12,12 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
+
     if @item.save
-      redirect_to root_path, notice: '商品が出品されました。'
+      redirect_to root_path, notice: '商品が正常に出品されました。'
     else
-      render :new
+      flash.now[:alert] = @item.errors.full_messages.join(', ') # エラー内容を表示
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -40,13 +42,13 @@ class ItemsController < ApplicationController
 
   private
 
-  def set_item
-    @item = Item.find(params[:id])
-  end
+  # def set_item
+  #   @item = Item.find(params[:id])
+  # end
 
-  def move_to_index
-    redirect_to root_path unless current_user == @item.user
-  end
+  # def move_to_index
+  #   redirect_to root_path unless current_user == @item.user
+  # end
 
   def item_params
     params.require(:item).permit(:image, :name, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id,

@@ -30,11 +30,11 @@ class Item < ApplicationRecord
                     }
 
   # 画像のバリデーション
-  validate :image_presence
+  validate :image
 
-  private
+  # private
 
-  def image_presence
-    errors.add(:image, 'を添付してください') unless image.attached?
-  end
+  # def image_presence
+  #   errors.add(:image, 'を添付してください') unless image.attached?
+  # end
 end
