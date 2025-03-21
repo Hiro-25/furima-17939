@@ -28,13 +28,22 @@ class Item < ApplicationRecord
                       less_than_or_equal_to: 9_999_999,
                       message: 'は¥300〜¥9,999,999の範囲で入力してください'
                     }
+  validate :price_must_be_half_width
 
   # 画像のバリデーション
-  validate :image
+  validate :image_presence
 
-  # private
+  private
 
-  # def image_presence
-  #   errors.add(:image, 'を添付してください') unless image.attached?
-  # end
+  def image_presence
+    errors.add(:image, 'を添付してください') unless image.attached?
+  end
+
+  def price_must_be_half_width
+    return if price.blank? # 空欄ならチェックしない
+
+    return if price.to_s.match?(/\A[0-9]+\z/) # 半角数字のみ許可
+
+    errors.add(:price, 'は半角数字のみ入力してください')
+  end
 end
