@@ -1,23 +1,25 @@
 class ItemsController < ApplicationController
-  # before_action :set_item, only: [:edit, :show, :update, :destroy]
-  before_action :move_to_index, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
+  # before_action :move_to_index, only: [:edit, :update, :destroy]
 
-  def index
-    @items = Item.all
+  # def index
+  # @items = Item.all
+  # end
+
+  def new
+    @item = Item.new
   end
 
-  # def new
-  # @item = Item.new
-  # end
+  def create
+    @item = Item.new(item_params)
 
-  # def create
-  # @item = Item.new(item_params)
-  # if @item.save
-  # redirect_to root_path, notice: '商品が出品されました。'
-  # else
-  # render :new
-  # end
-  # end
+    if @item.save
+      redirect_to root_path, notice: '商品が正常に出品されました。'
+    else
+      flash.now[:alert] = @item.errors.full_messages.join(', ') # エラー内容を表示
+      render :new, status: :unprocessable_entity
+    end
+  end
 
   # def destroy
   # @item.destroy
@@ -38,9 +40,18 @@ class ItemsController < ApplicationController
   # def show
   # end
 
-  # private
+  private
 
-  # def item_params
-  # params.require(:item).permit(:name, :description, :price, :image, :category_id, :condition_id, :shipping_fee_id,:prefecture_id, :shipping_days_id).merge(user_id: current_user.id)
+  # def set_item
+  #   @item = Item.find(params[:id])
   # end
+
+  # def move_to_index
+  #   redirect_to root_path unless current_user == @item.user
+  # end
+
+  def item_params
+    params.require(:item).permit(:image, :name, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id,
+                                 :shipping_days_id, :price).merge(user_id: current_user.id)
+  end
 end
