@@ -37,12 +37,4 @@ class Item < ApplicationRecord
   def image_presence
     errors.add(:image, 'を添付してください') unless image.attached?
   end
-
-  def price_must_be_half_width
-    return if price.blank? # 空欄ならチェックしない
-
-    return if price.to_s.match?(/\A[0-9]+\z/) # 半角数字のみ許可
-
-    errors.add(:price, 'は半角数字のみ入力してください')
-  end
 end
