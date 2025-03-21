@@ -28,13 +28,9 @@ class Item < ApplicationRecord
                       less_than_or_equal_to: 9_999_999,
                       message: 'は¥300〜¥9,999,999の範囲で入力してください'
                     }
-  validate :price_must_be_half_width
 
   # 画像のバリデーション
   validate :image_presence
-
-  # その他のバリデーション
-  validates :user, presence: true
 
   private
 
