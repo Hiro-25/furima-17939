@@ -2,9 +2,9 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   # before_action :move_to_index, only: [:edit, :update, :destroy]
 
-  def index
-    @items = Item.all
-  end
+  # def index
+  # @items = Item.all
+  # end
 
   def new
     @item = Item.new
@@ -12,6 +12,7 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
+    @item.user = current_user
 
     if @item.save
       redirect_to root_path, notice: '商品が正常に出品されました。'

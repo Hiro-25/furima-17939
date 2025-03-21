@@ -33,6 +33,9 @@ class Item < ApplicationRecord
   # 画像のバリデーション
   validate :image_presence
 
+  # その他のバリデーション
+  validates :user, presence: true
+
   private
 
   def image_presence
