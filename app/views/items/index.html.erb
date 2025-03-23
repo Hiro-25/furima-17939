@@ -128,11 +128,10 @@
     </div>
     <ul class='item-lists'>
 
-      <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
       <% if @items.present? %>
         <% @items.each do |item| %>
           <li class='list'>
-            <%= link_to item_path(item) do %>
+            <%= link_to '#' do %>
               <div class='item-img-content'>
                 <% if item.image.attached? %>
                   <%= image_tag url_for(item.image), class: "item-img" %>
@@ -151,7 +150,7 @@
                   <%= item.name %>
                 </h3>
                 <div class='item-price'>
-                  <span><%= item.price %>円<br><%= item.shipping_fee_id == 1 ? "送料込み(出品者負担)" : "着払い(購入者負担)" %></span>
+                  <span><%= item.price %>円<br><%= item.shipping_fee.name %></span>
                 <div class='star-btn'>
                   <%= image_tag "star.png", class:"star-icon" %>
                   <span class='star-count'>0</span>
@@ -163,10 +162,6 @@
       <% end %>
     
     <% else %>
-      <%# //商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
-
-      <%# 商品がない場合は以下のダミー商品が表示されるようにしましょう %>
-      <%# 商品がある場合は表示されないようにしましょう %>
         <li class='list'>
           <%= link_to '#' do %>
             <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
@@ -185,8 +180,6 @@
             </div>
           <% end %>
         </li>
-      <%# //商品がある場合は表示されないようにしましょう %>
-      <%# //商品がない場合は以下のダミー商品が表示されるようにしましょう %>
       <% end %>
     </ul>
   </div>
