@@ -3,9 +3,7 @@ class ItemsController < ApplicationController
   # before_action :move_to_index, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.includes(:user).order('created_at DESC')
-    query = 'SELECT * FROM items'
-    @items = Item.find_by_sql(query)
+    @items = Item.includes(:image_attachment).order(created_at: :desc)
   end
 
   def new
