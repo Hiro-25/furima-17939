@@ -2,9 +2,9 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   # before_action :move_to_index, only: [:edit, :update, :destroy]
 
-  # def index
-  # @items = Item.all
-  # end
+  def index
+    @items = Item.includes(:image_attachment).order(created_at: :desc)
+  end
 
   def new
     @item = Item.new
