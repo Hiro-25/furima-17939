@@ -37,14 +37,15 @@ class ItemsController < ApplicationController
   # end
   # end
 
-  # def show
-  # end
+  def show
+    @item = Item.find(params[:id])
+  end
 
   private
 
-  # def set_item
-  #   @item = Item.find(params[:id])
-  # end
+  def set_item
+    @item = Item.find(params[:id])
+  end
 
   # def move_to_index
   #   redirect_to root_path unless current_user == @item.user
