@@ -2,9 +2,11 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   # before_action :move_to_index, only: [:edit, :update, :destroy]
 
-  # def index
-  # @items = Item.all
-  # end
+  def index
+    @items = Item.includes(:user).order('created_at DESC')
+    query = 'SELECT * FROM items'
+    @items = Item.find_by_sql(query)
+  end
 
   def new
     @item = Item.new
