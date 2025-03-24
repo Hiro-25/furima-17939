@@ -32,7 +32,7 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
-      redirect_to root_path, notice: '商品情報が更新されました。'
+      redirect_to item_path(@item), notice: '商品情報が更新されました。'
     else
       flash.now[:alert] = @item.errors.full_messages.join(', ')
       render :edit, status: :unprocessable_entity
