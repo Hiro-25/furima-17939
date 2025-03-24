@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show]
+  before_action :set_item, only: [:show, :edit, :update]
   # before_action :move_to_index, only: [:edit, :update, :destroy]
 
   def index
@@ -27,16 +27,17 @@ class ItemsController < ApplicationController
   # redirect_to root_path, notice: '商品が削除されました。'
   # end
 
-  # def edit
-  # end
+  def edit
+  end
 
-  # def update
-  # if @item.update(item_params)
-  # redirect_to root_path, notice: '商品情報が更新されました。'
-  # else
-  # render :edit
-  # end
-  # end
+  def update
+    if @item.update(item_params)
+      redirect_to root_path, notice: '商品情報が更新されました。'
+    else
+      flash.now[:alert] = @item.errors.full_messages.join(', ')
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   def show
   end
