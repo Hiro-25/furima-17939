@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
 
   # def destroy
   # @item.destroy
-  # redirect_to root_path, notice: '商品が削除されました。'
+  # redirect_to root_path
   # end
 
   def edit
@@ -32,9 +32,8 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
-      redirect_to item_path(@item), notice: '商品情報が更新されました。'
+      redirect_to item_path(@item)
     else
-      flash.now[:alert] = @item.errors.full_messages.join(', ')
       render :edit, status: :unprocessable_entity
     end
   end
