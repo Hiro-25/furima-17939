@@ -33,6 +33,10 @@ class Item < ApplicationRecord
   # 画像のバリデーション
   validate :image_presence
 
+  with_options presence: true do
+    validates :image, on: :create
+  end
+
   private
 
   def image_presence

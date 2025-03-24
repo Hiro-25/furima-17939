@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show]
-  # before_action :move_to_index, only: [:edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update]
+  before_action :move_to_index, only: [:edit, :update]
 
   def index
     @items = Item.includes(:image_attachment).order(created_at: :desc)
@@ -24,19 +24,19 @@ class ItemsController < ApplicationController
 
   # def destroy
   # @item.destroy
-  # redirect_to root_path, notice: '商品が削除されました。'
+  # redirect_to root_path
   # end
 
-  # def edit
-  # end
+  def edit
+  end
 
-  # def update
-  # if @item.update(item_params)
-  # redirect_to root_path, notice: '商品情報が更新されました。'
-  # else
-  # render :edit
-  # end
-  # end
+  def update
+    if @item.update(item_params)
+      redirect_to item_path(@item)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   def show
   end
@@ -47,9 +47,9 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  # def move_to_index
-  #   redirect_to root_path unless current_user == @item.user
-  # end
+  def move_to_index
+    redirect_to root_path unless current_user == @item.user
+  end
 
   def item_params
     params.require(:item).permit(:image, :name, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id,
