@@ -10,7 +10,7 @@ class OrderAddress
     validates :phone_number
     validates :user_id
     validates :item_id
-    # validates :token
+    validates :token
   end
 
   # 郵便番号の形式：123-4567

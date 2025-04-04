@@ -1,4 +1,6 @@
 const pay = () => {
+  const publicKey = gon.public_key
+  const payjp = Payjp(publicKey) // PAY.JPテスト公開鍵
   // 購入フォームが存在しないページでは処理しない
   const form = document.getElementById('charge-form');
   if (!form) return;
@@ -57,3 +59,4 @@ const pay = () => {
 
 // Turbo対応
 window.addEventListener("turbo:load", pay);
+window.addEventListener("turbo:render", pay);
