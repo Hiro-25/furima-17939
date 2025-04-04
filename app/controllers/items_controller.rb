@@ -28,6 +28,10 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    # 出品者でない場合 または 売却済み商品ならトップページへ
+    return unless current_user != @item.user || @item.order.present?
+
+    redirect_to root_path
   end
 
   def update
@@ -53,6 +57,6 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:image, :name, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id,
-                                 :shipping_days_id, :price).merge(user_id: current_user.id)
+                                 :shipping_days_id, :price).merge(user_id: current_user.id, token: params[:token])
   end
 end
