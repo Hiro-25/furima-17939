@@ -28,6 +28,10 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    # 出品者でない場合 または 売却済み商品ならトップページへ
+    return unless current_user != @item.user || @item.order.present?
+
+    redirect_to root_path
   end
 
   def update
