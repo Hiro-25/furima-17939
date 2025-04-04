@@ -15,10 +15,6 @@ const pay = () => {
     return;
   }
 
-  // 公開鍵でPAY.JPインスタンスを作成
-  const payjp = Payjp('pk_test_2bdf2beca5e14f02c230fe05'); // ←あなたの公開鍵に変更
-  const elements = payjp.elements();
-
   // 各入力フィールドを作成してマウント
   const numberElement = elements.create('cardNumber');
   const expiryElement = elements.create('cardExpiry');
