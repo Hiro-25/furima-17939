@@ -12,7 +12,6 @@ const pay = () => {
   const cvcForm = document.getElementById('cvc-form');
 
   if (!numberForm || !expiryForm || !cvcForm) {
-    console.warn("❗️カード情報入力欄のDOMが見つかりません");
     return;
   }
 
@@ -28,15 +27,12 @@ const pay = () => {
   // フォーム送信時の処理
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    console.log("✅ 購入ボタンが押されました");
 
     payjp.createToken(numberElement).then(function (response) {
       if (response.error) {
-        console.error("❌ トークン生成失敗:", response.error.message);
         alert("カード情報に誤りがあります。ご確認ください。");
       } else {
         const token = response.id;
-        console.log("✅ トークン生成成功:", token);
 
         // トークンをフォームに埋め込み
         const tokenObj = `<input value="${token}" name="token" type="hidden">`;
